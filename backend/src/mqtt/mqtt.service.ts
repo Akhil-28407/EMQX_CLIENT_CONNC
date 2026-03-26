@@ -6,11 +6,13 @@ export class MqttService implements OnModuleInit, OnModuleDestroy {
   private client: mqtt.MqttClient | null = null;
   private readonly logger = new Logger('MqttService');
 
-  // EMQX Cloud Default Connection (From Documentation patterns)
+  // EMQX Cloud Default Connection
   private readonly brokerConfig = {
     host: 'l96965cf.ala.asia-southeast1.emqxsl.com',
     port: 8084,
     protocol: 'wss' as const,
+    username: '', // <--- Set your EMQX username here for persistent logging
+    password: '', // <--- Set your EMQX password here for persistent logging
     path: '/mqtt',
   };
 
@@ -25,13 +27,19 @@ export class MqttService implements OnModuleInit, OnModuleDestroy {
   }
 
   private connectToBroker() {
-    const { protocol, host, port, path } = this.brokerConfig;
+    const { protocol, host, port, path, username, password } = this.brokerConfig;
+    if (!username || !password) {
+      this.logger.warn(`[Senior Backend] Authentication missing. Persistent logging is DISABLED. (Add credentials in MqttService.ts to enable)`);
+      return;
+    }
     const url = `${protocol}://${host}:${port}${path}`;
 
     this.logger.log(`[Senior Backend] Persistent connection to ${url}...`);
 
     this.client = mqtt.connect(url, {
       clientId: `senior_backend_${Math.random().toString(16).substring(2, 8)}`,
+      username: this.brokerConfig.username,
+      password: this.brokerConfig.password,
       clean: true,
       connectTimeout: 4000,
       reconnectPeriod: 1000,

@@ -35,6 +35,7 @@ const initialStatus: MqttStatus = {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState<MqttStatus>(initialStatus)
   const [logs, setLogs] = useState<string[]>([])
   const [messages, setMessages] = useState<(MqttMessage & { sent?: boolean })[]>([])
@@ -64,6 +65,14 @@ function App() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [topicCards, setTopicCards] = useState<Record<string, { latest: any; at: string; count: number }>>({})
   const [isMqttConnected, setIsMqttConnected] = useState(false)
+
+  // Initial Boot Sequence
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [])
 
   // Mouse Tracking Glow
   useEffect(() => {
@@ -242,8 +251,17 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
-      <div className="mouse-glow"></div>
+    <>
+      {isLoading && (
+        <div className="loading-wrapper">
+          <div className="spinner">
+            <div className="spinner1"></div>
+          </div>
+          <div className="loading-text">Initializing Tactical Link...</div>
+        </div>
+      )}
+      <div className="app-shell" style={{ opacity: isLoading ? 0 : 1 }}>
+        <div className="mouse-glow"></div>
       {!isMqttConnected && (
         <div className="connection-banner">
           MQTT DISCONNECTED - Use the setup form to connect to a broker.
@@ -434,6 +452,7 @@ function App() {
         </div>
       </aside>
     </div>
+    </>
   )
 }
 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
 :root {
   --bg-dark: #05070a;
   --panel-bg: rgba(13, 17, 23, 0.7);
@@ -10,8 +12,6 @@
   --border: rgba(255, 255, 255, 0.1);
   --glass-blur: blur(12px);
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -374,4 +374,53 @@ button.ghost:hover {
   font-size: 0.8rem;
   color: var(--success);
   overflow-x: auto;
+}
+
+/* Loading Screen - Uiverse.io xXJollyHAKERXx */
+.loading-wrapper {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: var(--bg-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  z-index: 9999;
+}
+
+.spinner {
+  background-image: linear-gradient(rgb(186, 66, 255) 35%,rgb(0, 225, 255));
+  width: 100px;
+  height: 100px;
+  animation: spinning82341 1.7s linear infinite;
+  text-align: center;
+  border-radius: 50px;
+  filter: blur(1px);
+  box-shadow: 0px -5px 20px 0px rgb(186, 66, 255), 0px 5px 20px 0px rgb(0, 225, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner1 {
+  background-color: rgb(36, 36, 36);
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+  filter: blur(10px);
+}
+
+@keyframes spinning82341 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent);
+  letter-spacing: 5px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
 }
