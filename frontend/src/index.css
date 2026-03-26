@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #061018;
+  --bg2: #102634;
+  --panel: rgba(8, 27, 39, 0.86);
+  --panel-elevated: rgba(17, 38, 52, 0.9);
+  --line: rgba(128, 167, 190, 0.35);
+  --text: #e4f4ff;
+  --muted: #8fbdcf;
+  --mono: 'Space Mono', monospace;
+  --sans: 'Chakra Petch', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(85, 167, 210, 0.35), transparent 35%),
+    radial-gradient(circle at 85% 25%, rgba(255, 148, 86, 0.22), transparent 28%),
+    linear-gradient(140deg, var(--bg), var(--bg2));
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
