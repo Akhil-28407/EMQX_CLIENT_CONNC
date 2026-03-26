@@ -40,10 +40,11 @@ function App() {
   const [logs, setLogs] = useState<string[]>([])
   const [messages, setMessages] = useState<(MqttMessage & { sent?: boolean })[]>([])
 
-  const [host, setHost] = useState('broker.emqx.io')
-  const [port, setPort] = useState(8083)
-  const [protocol, setProtocol] = useState<BrokerProtocol>('ws')
-  const [path, setPath] = useState('/mqtt')
+  const [host, setHost] = useState(import.meta.env.VITE_MQTT_HOST || 'broker.emqx.io')
+  const [port, setPort] = useState(Number(import.meta.env.VITE_MQTT_PORT) || 8083)
+  const [protocol, setProtocol] = useState<BrokerProtocol>(import.meta.env.VITE_MQTT_PROTOCOL || 'ws')
+  const [path, setPath] = useState(import.meta.env.VITE_MQTT_PATH || '/mqtt')
+  const [backendUrl, setBackendUrl] = useState(import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000')
   const [clientId, setClientId] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -322,6 +323,10 @@ function App() {
                   <input type="checkbox" checked={rejectUnauthorized} onChange={setRejectUnauthorized as any} />
                   Verify SSL
                 </label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '0.5rem' }}>
+                  <label style={{ fontSize: '0.6rem' }}>BACKEND URL (API/SOCKET)</label>
+                  <input value={backendUrl} onChange={e => setBackendUrl(e.target.value)} placeholder="http://localhost:3000" />
+                </div>
               </div>
             </details>
 
